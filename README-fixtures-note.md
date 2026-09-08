@@ -1,0 +1,1 @@
+Ajuste de agenda e próximos jogos preparado em 08/09/2026 na branch full-manager antes de publicar.

@@ -1,0 +1,10 @@
+(()=>{
+const CLUB_POWER={'Internacional':88,'Grêmio':87,'Juventude':76,'Caxias':72,'Ypiranga':69,'São José':67,'São Luiz':66,'Avenida':65,'Guarany de Bagé':64,'Novo Hamburgo':64,'Inter-SM':63,'Monsoon':62,'Pelotas':57,'Brasil-Pel':56,'Passo Fundo':54,'Veranópolis':53,'Lajeadense':52,'Esportivo':51,'Aimoré':50,'Santa Cruz':49,'Bagé':48,'Glória':47,'Gaúcho':46,'Guarani-VA':45,'Gramadense':44,'União Frederiquense':43,'Brasil-FAR':42,'APAFUT':40,'São Paulo-RG':33,'Rio Grande':32,'Farroupilha':31,'Riograndense-RG':29,'Panambi':28,'Cruz Alta':27,'Futebol Com Vida':26,'Novo Horizonte':25,'Real Sport':24,'Clube 1992':23};
+function purge(){try{if(window.G||typeof G!=='undefined'){G.db=[];G.realRosterGuard=true}}catch(e){}}
+window.strength=function(team,d){if(team===G.club)return Math.round(G.roster.reduce((a,x)=>a+x[2],0)/Math.max(1,G.roster.length));return CLUB_POWER[team]||Math.round((DIV[d].range[0]+DIV[d].range[1])/2)};
+const oldLoad=window.loadGame;
+if(typeof oldLoad==='function')window.loadGame=function(){const r=oldLoad.apply(this,arguments);setTimeout(()=>{purge();try{renderMarket();saveGame(false)}catch(e){}},0);return r};
+window.renderMarket=function(){if(!G.juniors)G.juniors=makeJuniors();const m=document.getElementById('marketList'),j=document.getElementById('juniorList');if(m)m.innerHTML='<div class="item"><b>Elencos reais somente</b><br><span class="mut">Os jogadores genéricos dos clubes foram removidos. Este mercado só vai exibir atleta real quando o nome, clube e posição estiverem confirmados.</span></div>';if(j)j.innerHTML=G.juniors.slice(0,60).map(p=>`<div class=item><b>${p.n}</b> <span class="statusPill junior">PROMESSA FICTÍCIA</span> • ${p.age} anos • ${p.p} • força ${p.ov} • potencial ${p.potential} • ${fmt(p.value)} <button class=btn onclick="buyJunior('${p.id}')">Comprar</button> <button class=btn onclick="loanJunior('${p.id}')">Empréstimo</button></div>`).join('')};
+window.randomMarket=function(){};
+purge();setTimeout(()=>{purge();try{renderMarket()}catch(e){}},0);
+})();
